@@ -20,10 +20,18 @@ class CreateOptionsTable extends Migration
 		# Auto Incrementing ID field
 		
 		$table->increments('id');
-
+		$table->timestamps();
 		# The rest of the fields...
 		$table->string('name');
-		$table->integer('votes');
+		$table->integer('votes')->default(0);
+			 
+		$table->integer('poll_id')->unsigned();
+			
+            # Make foreign keys
+			
+         $table->foreign('poll_id')->references('id')->on('polls');
+			
+			 
 	});
     }
 

@@ -17,15 +17,20 @@ class CreatePollOptionTable extends Migration
 		
 		Schema::create('poll_option', function (Blueprint $table) {
 
-		# Auto Incrementing ID field
+	# Auto Incrementing ID field
 		
-		$table->increments('id');
+		 $table->increments('id');
+         $table->timestamps();
 
-		# The rest of the fields...
-		$table->integer('poll_id');
-		$table->integer('option_id');
+		 $table->integer('poll_id')->unsigned();
+         $table->integer('option_id')->unsigned();
 			
-			});
+            # Make foreign keys
+			
+         $table->foreign('poll_id')->references('id')->on('polls');
+         $table->foreign('option_id')->references('id')->on('options');
+			
+		});
     }
 
     /**
@@ -36,6 +41,6 @@ class CreatePollOptionTable extends Migration
     public function down()
     {
         //Drop this table if needed
-		Schema::drop('poll_tag');
+		Schema::drop('poll_option');
     }
 }

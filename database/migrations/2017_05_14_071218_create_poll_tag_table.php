@@ -19,11 +19,16 @@ class CreatePollTagTable extends Migration
 
 		# Auto Incrementing ID field
 		
-		$table->increments('id');
+		 $table->increments('id');
+         $table->timestamps();
 
-		# The rest of the fields...
-		$table->integer('poll_id');
-		$table->integer('tag_id');
+		 $table->integer('poll_id')->unsigned();
+         $table->integer('tag_id')->unsigned();
+			
+            # Make foreign keys
+			
+         $table->foreign('poll_id')->references('id')->on('polls');
+         $table->foreign('tag_id')->references('id')->on('tags');
 			
 	});
     }

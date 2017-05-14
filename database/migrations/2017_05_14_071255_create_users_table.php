@@ -23,10 +23,11 @@ class CreateUsersTable extends Migration
 
 		# created and updated_at fields
 		$table->timestamps();
-
+		$table->rememberToken();
+			 
 		# The rest of the fields...
 		$table->string('name');
-		$table->string('email');
+		$table->string('email')->unique();
 		$table->string('password');
 
 		

@@ -1,10 +1,8 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
-class CreateTagsTable extends Migration
+class CreatePasswordResetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +11,12 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
-        //create tags table
-		Schema::create('tags', function (Blueprint $table) {
-
-		# Auto Incrementing ID field
-		
-		$table->increments('id');
-		$table->timestamps();
-		# The rest of the fields...
-		$table->string('name');
-	});
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token')->index();
+            $table->timestamp('created_at')->nullable();
+        });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -32,7 +24,6 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        //Drop delete tags table if needed
-		Schema::drop('tags');
+        Schema::dropIfExists('password_resets');
     }
 }

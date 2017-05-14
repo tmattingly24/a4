@@ -1,5 +1,9 @@
 @extends('layouts.master')
+
+@section('title')
+	Pollsterxy
+@endsection
+
 @section('content')	
-	@include('loginform')
 	@include('samplepolls')
 @endsection

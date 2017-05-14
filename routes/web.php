@@ -18,6 +18,8 @@
 	
 Route::get('/create', 'CreatePollController');
 
+Route::post('/pollcreated', 'CreatePollController@saveNewPoll');
+
 Route::get('/', 'DefaultController');
 
 Auth::routes();

@@ -21,20 +21,6 @@ footer {
   text-align: center;
 }
 
-#loginForm {
-
-float:left;
-margin-left:2.5%;
-width: 20%;	
-	
-}
-
-#signUpForm {
-	
-width: 33%;
-margin-left:2.5%;
-
-}
 
 #createPollForm {
 	
@@ -49,5 +35,12 @@ margin-left:2.5%;
 	font-weight:bold;
 	color: red;
 	font-size:large;
+	
+}
+
+.required {
+	
+display: inline;	
+color: red;	
 	
 }

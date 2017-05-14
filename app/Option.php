@@ -1,18 +1,12 @@
 <?php
 namespace App;
 use Illuminate\Database\Eloquent\Model;
-class Tag extends Model
+class Option extends Model
 {
-    public function books() {
-        return $this->belongsToMany('App\Book')->withTimestamps();
+    public function polls() {
+		
+        return $this->belongsTo('App\Poll');
     }
     
-    public static function getTagsForCheckboxes() {
-        $tags = Tag::orderBy('name','ASC')->get();
-        $tagsForCheckboxes = [];
-        foreach($tags as $tag) {
-            $tagsForCheckboxes[$tag['id']] = $tag->name;
-        }
-        return $tagsForCheckboxes;
-    }
+   
 }
