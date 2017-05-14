@@ -1,0 +1,26 @@
+.navbar-default {
+
+	border-radius: 0;
+	
+}
+
+
+#nav h1 a {
+
+	margin-left: .6em;
+	 font-family: 'Rye', cursive;
+	
+}
+
+footer {
+  background-color: rgb(44, 62, 80);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  color:#18bc9c;
+  font-family: 'Rye', cursive;
+  text-align: center;
+}
+
