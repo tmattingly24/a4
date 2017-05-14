@@ -44,3 +44,15 @@ display: inline;
 color: red;	
 	
 }
+
+#tags  {
+
+padding: .5em;	
+	
+}
+
+#tags input {
+
+	display: inline-block;
+	
+}

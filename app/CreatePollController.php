@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -26,9 +28,11 @@ class CreatePollController extends Controller
 		  Session::flash('message','You have to be logged in to create a new poll');
 		  return redirect('/login');
     	}
-		
-  		 return view('create');
-		
+		$tagsForCheckboxes = Tag::getTagsForCheckboxes();
+  		 return view('create')->with([
+			 
+            'tagsForCheckboxes' => $tagsForCheckboxes
+		]);
 	}
     
 	
@@ -40,6 +44,7 @@ class CreatePollController extends Controller
             'title' => 'required|min:3',
             'option1' => 'required|min:2',
             'option2' => 'required|min:2',
+			'tags' => 'required',
         	],$errors);
 		
         # Add new poll to database
@@ -49,6 +54,9 @@ class CreatePollController extends Controller
     	$poll->summary = $request->summary;
         $poll->user_id = $request->user()->id;
         $poll->save();
+		
+		
+		
       	
 		$options = [$request->option1,$request->option2,$request->option3,$request->option4,$request->option5];
 		
@@ -66,6 +74,11 @@ class CreatePollController extends Controller
 		
 			}
 		}
+		
+		
+		$tags = ($request->tags) ?: [];
+        $poll->tags()->sync($tags);
+        $poll->save();
 		
 		
 		 

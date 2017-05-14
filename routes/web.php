@@ -16,9 +16,11 @@
 
 //Route::get('/register', 'RegistrationController');
 	
-Route::get('/create', 'CreatePollController');
+Route::get('/create', 'PollController');
 
-Route::post('/pollcreated', 'CreatePollController@saveNewPoll');
+Route::get('/manage', 'PollController@managePolls');
+
+Route::post('/pollcreated', 'PollController@saveNewPoll');
 
 Route::get('/', 'DefaultController');
 

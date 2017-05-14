@@ -45,6 +45,20 @@
 							<textarea class="form-control" name="summary" id="summary" rows="5" placeholder="This field is optional. It can be used for a summary of the poll, or state your case for one side....">{{ $summary or '' }}</textarea>
 						</div>
 
+						 <label>Poll Category <p class="required">* At least one required</p></label>
+
+							<ul id='tags'>
+								@foreach($tagsForCheckboxes as $id => $name)
+									<input
+										type='checkbox'
+										value='{{ $id }}'
+										id='tag_{{ $id }}'
+										name='tags[]'
+									>&nbsp;
+									<label for='tag_{{ $id }}'>{{ $name }}</label>&nbsp;&nbsp;
+								@endforeach
+							</ul>
+
 						<button type="submit" class="btn btn-primary">
 							Save
 						</button>
