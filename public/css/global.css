@@ -13,14 +13,32 @@
 }
 
 footer {
+	
   background-color: rgb(44, 62, 80);
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   padding: 1rem;
   color:#18bc9c;
   font-family: 'Rye', cursive;
   text-align: center;
 }
 
+#loginForm {
+
+float:left;
+margin-left:2.5%;
+width: 20%;	
+	
+}
+
+#signUpForm {
+	
+width: 33%;
+margin-left:2.5%;
+
+}
+
+#createPollForm {
+	
+width: 33%;
+margin-left:2.5%;
+	
+}

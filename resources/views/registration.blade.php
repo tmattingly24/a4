@@ -1,6 +1,7 @@
-
-<form id="loginForm" class="form-signin">
-	<h3 class="form-signin-heading">Already Have an Account?</h3>
+@extends('layouts.master')
+@section('content')	
+<form id="signUpForm" class="form-signin">
+	<h3 class="form-signin-heading">Fill Out Form Below to Register: </h3>
 	<label for="inputEmail" class="sr-only">Email address</label>
 	<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
 	<label for="inputPassword" class="sr-only">Password</label>
@@ -12,3 +13,4 @@
 	</div>
 	<button class="btn btn-sm btn-primary btn-block" type="submit">Sign in</button>
 </form>
+@endsection

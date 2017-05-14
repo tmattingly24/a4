@@ -13,14 +13,25 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        //create users table
+		
+		 Schema::create('users', function (Blueprint $table) {
+
+		# Auto Incrementing ID field
+		
+		$table->increments('id');
+
+		# created and updated_at fields
+		$table->timestamps();
+
+		# The rest of the fields...
+		$table->string('name');
+		$table->string('email');
+		$table->string('password');
+
+		
+
+	});
     }
 
     /**
@@ -30,6 +41,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        //Drop this table if needed
+		
+		Schema::drop('users');
     }
 }

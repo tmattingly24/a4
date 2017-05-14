@@ -26,15 +26,15 @@
 			</a>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="">Home</a></li>
+					<li class="active"><a href="/">Home</a></li>
 					<li class="divider"></li>
 				</ul>
 				<ul class="nav navbar-nav">
-					<li><a href="">Create a Poll</a></li>
+					<li><a href="/create">Create a Poll</a></li>
 					<li class="divider"></li>
-					<li><a href="">Sign Up</a></li>
+					<li><a href="/register">Sign Up</a></li>
 					<li class="divider"></li>
-					<li><a href="">Something Else</a></li>
+					<li><a href="/browse">Browse Polls</a></li>
 					<li class="divider"></li>
 				</ul>
 			</div>
@@ -46,11 +46,7 @@
 
 	@yield('content')
 	
-<footer>
-	
-	<h1>Tim Mattingly A4</h1>
-	
-</footer>
+
 	
 </body>
 

@@ -11,4 +11,9 @@
 |
 */
 
+
+Route::get('/register', 'RegistrationController');
+
+Route::get('/create', 'CreatePollController');
+
 Route::get('/', 'DefaultController');
