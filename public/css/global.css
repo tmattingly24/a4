@@ -42,3 +42,12 @@ width: 33%;
 margin-left:2.5%;
 	
 }
+
+.message {
+	
+	padding-left: .5em;
+	font-weight:bold;
+	color: red;
+	font-size:large;
+	
+}

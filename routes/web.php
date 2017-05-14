@@ -12,8 +12,14 @@
 */
 
 
-Route::get('/register', 'RegistrationController');
 
+
+//Route::get('/register', 'RegistrationController');
+	
 Route::get('/create', 'CreatePollController');
 
 Route::get('/', 'DefaultController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

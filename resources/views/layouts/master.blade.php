@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+	
 	<div id="nav">
 		<div class="navbar navbar-default navbar-fixed">
 			<h1><a href="a4.tim-mattingly.com">Pollsterxy.com</a></h1>
@@ -32,16 +32,32 @@
 				<ul class="nav navbar-nav">
 					<li><a href="/create">Create a Poll</a></li>
 					<li class="divider"></li>
-					<li><a href="/register">Sign Up</a></li>
-					<li class="divider"></li>
 					<li><a href="/browse">Browse Polls</a></li>
 					<li class="divider"></li>
+					
+					<!---Change links to fit user login status----->
+					
+					@if(!Auth::check())
+					<li><a href="/login">Login</a></li>
+					<li class="divider"></li>
+					<li><a href="/register">Sign Up</a></li>
+					<li class="divider"></li>
+					@else
+					<li><a href="/logout">Logout</a></li>
+					<li class="divider"></li>
+					@endif
+					
+					<!----------------------------------------------->
 				</ul>
 			</div>
 		</div>
 		<!-- /.navbar -->
 	</div>
-
+	
+@if(Session::get('message') != null)
+    <div class='message'>{{ Session::get('message') }}</div>
+@endif
+	
 
 
 	@yield('content')

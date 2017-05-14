@@ -12,6 +12,8 @@ class RegistrationController extends Controller
     * /
 	*/
     public function __invoke() {
-        return view('registration');
+		
+
+       return view('registration');
     }
 }
