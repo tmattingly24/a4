@@ -9,6 +9,7 @@ use Session;
 use App\Tag;
 use App\Poll;
 use App\Option;
+use App\User;
 
 class PollController extends Controller
 {
@@ -94,16 +95,39 @@ class PollController extends Controller
 	public function managePolls(Request $request) {
 		
 		$user = $request->user();
+		$uid = $user->id;
 		
 		if(!$user) {
 			
 		  Session::flash('message','You have to be logged in to manage your polls');
 		  return redirect('/login');
     	} else {
-		
-		return view('manage');	
+			
+			$poll = new Poll();
+			$polls = User::find($uid)->polls;
+			
+		return view('manage')->with([
+			 
+            'polls' => $polls
+			
+		]);
+			
 		}
+		
 	}
+		
+		public function view($id) {
+			
+			$poll = Poll::find($id);
+			$options = $poll::find($id)->options;
+			$category = $poll::find($id)->tags;
+			return view('show')->with([
+            'poll' => $poll,
+			'options' => $options,
+			'category'=>$category,
+			]);
+			
+		}
    
 }
 		

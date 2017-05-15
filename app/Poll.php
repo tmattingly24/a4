@@ -15,7 +15,7 @@ class Poll extends Model
 	*
 	*/
     public function options() {
-        return $this->belongsToMany('App\Option');
+        return $this->hasMany('App\Option');
     }
 	
     /**
