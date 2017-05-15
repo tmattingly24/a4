@@ -1,9 +1,5 @@
 <?php
-
-
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Session;
 use App\Tag;
@@ -11,10 +7,8 @@ use App\Poll;
 use App\Option;
 use App\User;
 use App\Comment;
-
 class PollController extends Controller
 {
-
     
     public function __invoke(Request $request) {
 		
@@ -154,7 +148,6 @@ class PollController extends Controller
 		$id = $request->vote;
 		$option = Option::find($id);
 		$option->increment('votes',1);
-
 		return redirect()->back();
 	}
 	
@@ -274,29 +267,22 @@ class PollController extends Controller
 			}
 			
 			
-
 			foreach($newOptions as $option){
-
 				if($option){
 					
 				
-
 					$optionObj = new Option();
 					$optionObj->name = $option;
 					$optionObj->poll_id = $poll->id;
 					$optionObj->save();
 				
 					
-
 				}
 			}
 		
-
-
 			$tags = ($request->tags) ?: [];
 			$poll->tags()->sync($tags);
 			$poll->save();
-
 			
 			
 		}
@@ -332,7 +318,6 @@ class PollController extends Controller
 		
 		Session::flash('message','The Poll was deleted');
 		return redirect("/manage");
-
 		
 	}
 	
@@ -340,6 +325,14 @@ class PollController extends Controller
 	
 	//validate there was a comment submitted if so it
 		
+		$user = $request->user();
+		
+		if(!$user){
+			
+			Session::flash('message','Your must be logged in to post a comment...');
+			return redirect("/browse");
+			
+		} else {
 		
 		
 		$errors = [];
@@ -359,6 +352,7 @@ class PollController extends Controller
 		$commentObj->poll_id = $pollId;
 		$commentObj->save();
 		return redirect()->back();
+		}
 	}
    
 	public function showRandom(){
@@ -389,7 +383,6 @@ class PollController extends Controller
 					 $createdBy = User::find($uid);
 			
 						foreach($comments as $comment){
-
 							$user = User::find($comment->user_id);
 							$userName = $user->name;
 							$comment->push('userName');
@@ -417,7 +410,6 @@ class PollController extends Controller
 					 $createdBy = User::find($uid);
 			
 						foreach($comments as $comment){
-
 							$user = User::find($comment->user_id);
 							$userName = $user->name;
 							$comment->push('userName');
