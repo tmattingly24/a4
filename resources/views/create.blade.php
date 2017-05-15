@@ -1,10 +1,13 @@
-@extends('layouts.master')
+@extends('layouts.master') @section('title') New Poll @endsection @section('content')
 
-@section('title')
-    New Poll
-@endsection
+@if(count($errors) > 0)
+<ul>
+	@foreach ($errors->all() as $error)
+	<li class="alert alert-danger">{{ $error }}</li>
+	@endforeach
+</ul>
+@endif
 
-@section('content')
 <div class="container">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
@@ -45,19 +48,15 @@
 							<textarea class="form-control" name="summary" id="summary" rows="5" placeholder="This field is optional. It can be used for a summary of the poll, or state your case for one side....">{{ $summary or '' }}</textarea>
 						</div>
 
-						 <label>Poll Category <p class="required">* At least one required</p></label>
+						<label>Poll Category
+							<p class="required">* At least one required</p>
+						</label>
 
-							<ul id='tags'>
-								@foreach($tagsForCheckboxes as $id => $name)
-									<input
-										type='checkbox'
-										value='{{ $id }}'
-										id='tag_{{ $id }}'
-										name='tags[]'
-									>&nbsp;
-									<label for='tag_{{ $id }}'>{{ $name }}</label>&nbsp;&nbsp;
-								@endforeach
-							</ul>
+						<ul id='tags'>
+							@foreach($tagsForCheckboxes as $id => $name)
+							<input type='checkbox' value='{{ $id }}' id='tag_{{ $id }}' name='tags[]'>&nbsp;
+							<label for='tag_{{ $id }}'>{{ $name }}</label>&nbsp;&nbsp; @endforeach
+						</ul>
 
 						<button type="submit" class="btn btn-primary">
 							Save

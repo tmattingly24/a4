@@ -20,6 +20,7 @@
 	<div id="nav">
 		<div class="navbar navbar-default navbar-fixed">
 			<h1><a href="a4.tim-mattingly.com">Pollsterxy.com</a></h1>
+				
 			<!-- .btn-navbar is used as the toggle for collapsed navbar content -->
 			<a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 				<span class="glyphicon glyphicon-bar"></span>

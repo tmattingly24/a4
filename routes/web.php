@@ -37,8 +37,8 @@ Route::get('/comment', 'PollController@saveComment');
 
 Route::get('/browse', 'PollController@showRandom');
 
-Route::get('/', 'DefaultController');
+Route::get('/', 'PollController@showRandom');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'PollController@showRandom');
