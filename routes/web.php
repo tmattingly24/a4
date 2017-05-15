@@ -14,22 +14,22 @@
 
 
 
-//Route::get('/register', 'RegistrationController');
+//Authorization is handled within the controller
 
-//Routes that require authorization
 
-//Route::group(['middleware' => 'auth'], function () {
-	
-	
 Route::get('/create', 'PollController');
 
 Route::get('/manage', 'PollController@managePolls');
 
 Route::post('/pollcreated', 'PollController@saveNewPoll');
 
-//});
-
 Route::get('/polls/{id}', 'PollController@view');
+
+Route::get('/editpoll/{id}', 'PollController@editPoll');
+
+Route::post('/savechanges', 'PollController@saveChanges');
+
+Route::get('/deletepoll/{id}', 'PollController@deletePoll');
 
 Route::get('/vote', 'PollController@vote');
 
@@ -42,3 +42,13 @@ Route::get('/', 'PollController@showRandom');
 Auth::routes();
 
 Route::get('/home', 'PollController@showRandom');
+
+
+/**
+* Log viewer
+* (only accessible locally)
+*/
+
+if(config('app.env') == 'local') {
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+}

@@ -15,10 +15,7 @@ use App\Comment;
 class PollController extends Controller
 {
 
-    /**
-	* GET
-    * /
-	*/
+    
     public function __invoke(Request $request) {
 		
 	//Redirect user to login page if trying to create new poll and not logged in
@@ -39,6 +36,8 @@ class PollController extends Controller
     
 	
 	public function saveNewPoll(Request $request) {
+		
+		//validate request and if passed save poll to db else send back and show errors
 		
 		$errors = [];
 		
@@ -95,6 +94,8 @@ class PollController extends Controller
 	
 	public function managePolls(Request $request) {
 		
+		//ensure user is logged in and send to a list of user polls
+		
 		$user = $request->user();
 		$uid = $user->id;
 		
@@ -118,7 +119,8 @@ class PollController extends Controller
 	}
 		
 		public function view($id) {
-			
+		
+			//view poll information based on poll id
 			
 			$poll = Poll::find($id);
 			$comments =$poll::find($id)->comments->take(10);
@@ -147,6 +149,8 @@ class PollController extends Controller
 	
 	public function vote(Request $request){
 		
+		//grab the option voted for and add one to votes in table
+		
 		$id = $request->vote;
 		$option = Option::find($id);
 		$option->increment('votes',1);
@@ -155,17 +159,157 @@ class PollController extends Controller
 	}
 	
 	
-	public function deletePoll($id){
+	public function deletePoll($id, Request $request){
 		
+		$poll = Poll::find($id);
+		$uid = $poll->user_id;
+		$requestUid = $request->user()->id;
+		
+		//Ensure this is the correct user to delete the poll if so send to delete confirmation
+		
+		if($uid !== $requestUid) {
+			
+			Session::flash('message','Either we made a mistake, or you do not own this poll to delete it...');	
+			return redirect('/');
+		}
 		
 	}
 	
-	public function editPoll($id){
+	
+	public function editPoll($id, Request $request){
+		
+		$poll = Poll::find($id);
+		$uid = $poll->user_id;
+		$requestUid = $request->user()->id;
+	
+		//Ensure this is correct user to edit the poll if so send to edit form
+		
+		if($uid !== $requestUid) {
+			
+			Session::flash('message','Either we made a mistake, or you do not own this poll to edit it...');	
+			return redirect('/');
+		} else {
+		
+		
+		$comments =$poll::find($id)->comments->take(10);
+		$options = $poll::find($id)->options;
+		$category = $poll::find($id)->tags;
+		$tagsForCheckboxes = Tag::getTagsForCheckboxes();
+  		
+		
+			return view('editpoll')->with([
+            'polls' => $poll,
+			'options' => $options,
+			'tagsForCheckboxes' => $tagsForCheckboxes
+				
+			]);
+			
+			
+		}
+		
+	}
+	
+	
+	public function saveChanges(Request $request){
+		
+		//validate request if errors send back if not update db
+		
+		$errors = [];
+		
+		  $this->validate($request, [
+            'title' => 'required|min:3',
+            'option1' => 'required|min:2',
+            'option2' => 'required|min:2',
+			'tags' => 'required',
+        	],$errors);
+		
+		if($errors){
+			
+			return redirect()->back()->with([$errors]);
+			
+		} else {
+			
+			$id = $request->id;
+			$poll = Poll::find($id);
+			
+			$poll->title = $request->title;
+			$poll->summary = $request->summary;
+			$poll->user_id = $request->user()->id;
+			$poll->save();
+			$oldOptions = $poll::find($id)->options;
+			
+				
+			$newOptions = [$request->option1,$request->option2,$request->option3,$request->option4,$request->option5];
+		
+		//delete options that are not a part of poll anymore deleting because results could be manipulated by changing no to yes etc.
+			
+			foreach($oldOptions as $oldOption){
+				
+				$match = false;
+				
+					foreach($newOptions as $newOption){
+						
+						if($oldOption->name == $newOption){
+							
+							$match = true;
+							unset($newOptions[array_search($newOption,$newOptions)]);
+					}
+				
+				
+					if($match==false){
+						
+						$oldOption->delete();
+						
+					}
+					
+				}
+				
+			}
+			
+			
+
+			foreach($newOptions as $option){
+
+				if($option){
+					
+				
+
+					$optionObj = new Option();
+					$optionObj->name = $option;
+					$optionObj->poll_id = $poll->id;
+					$optionObj->save();
+				
+					
+
+				}
+			}
+		
+
+
+			$tags = ($request->tags) ?: [];
+			$poll->tags()->sync($tags);
+			$poll->save();
+
+			
+			
+		}
+		
+		Session::flash('message','Your changes were saved...');
+		return redirect("polls/$id");
+	}
+	
+	
+	
+	
+	public function confirmDelete(){
 		
 		
 	}
 	
 	public function saveComment(Request $request){
+	
+	//validate there was a comment submitted if so it
+		
 		
 		
 		$errors = [];
@@ -188,7 +332,15 @@ class PollController extends Controller
 	}
    
 	public function showRandom(){
+		
+		
+		/*construct an array with all the poll information 
+			to send back to the page
+			If the number of polls total is less than 10, only send back
+			3 random polls, otherwise send back 10
 			
+			*/
+		
 			$polls = [];
 			$count = Poll::count('id');
 			$max = Poll::max('id');

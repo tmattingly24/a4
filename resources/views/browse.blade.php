@@ -86,4 +86,3 @@
 	@endforeach
 @endsection
 
-@end section
