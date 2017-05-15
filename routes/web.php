@@ -31,6 +31,8 @@ Route::post('/savechanges', 'PollController@saveChanges');
 
 Route::get('/deletepoll/{id}', 'PollController@deletePoll');
 
+Route::get('/confirmdelete/{id}', 'PollController@confirmDelete');
+
 Route::get('/vote', 'PollController@vote');
 
 Route::get('/comment', 'PollController@saveComment');

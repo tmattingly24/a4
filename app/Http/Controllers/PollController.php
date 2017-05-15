@@ -171,7 +171,14 @@ class PollController extends Controller
 			
 			Session::flash('message','Either we made a mistake, or you do not own this poll to delete it...');	
 			return redirect('/');
+		} else {
+			
+			
+			return view('deletepoll')->with(['id'=>$id]);
+			
 		}
+		
+	
 		
 	}
 	
@@ -301,8 +308,31 @@ class PollController extends Controller
 	
 	
 	
-	public function confirmDelete(){
+	public function confirmDelete($id){
+			
+			$poll = Poll::find($id);
+			
+			if(!$poll) {
+				
+				Session::flash('message', 'Deletion failed; poll not found.');
+				return redirect('/');
+			}else {
+				
+				
+				
+				$poll->comments()->delete();
+				$poll->options()->delete();
+				
+				
+				
+				$poll->tags()->detach();
+        		$poll->delete();
+				
+			}
 		
+		Session::flash('message','The Poll was deleted');
+		return redirect("/manage");
+
 		
 	}
 	
