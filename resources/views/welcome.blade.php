@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-	Pollsterxy
+	Welcome to Pollsterxy
 @endsection
 
 @section('content')	
